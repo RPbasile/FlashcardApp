@@ -1,27 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useHistory } from "react-router-dom";
 import { createDeck } from '../utils/api/index'; 
 
-function CreateDeck({deck, setDeck}) {
+function CreateDeck() {
   let history = useHistory();
+  const [newDeck, setNewDeck] = useState()
 
-    //change deck state when name changes
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const response = await createDeck(newDeck);
+    history.push(`/decks/${response.id}`);
+    
+  }
+
     function changeName(event) {
-      setDeck({ ...deck, name: event.target.value });
+      setNewDeck({ ...newDeck, name: event.target.value });
     }
-    //change deck state when description changes
+
     function changeDesc(event) {
-      setDeck({ ...deck, description: event.target.value });
+      setNewDeck({ ...newDeck, description: event.target.value });
     }
 
   function handleCancel(event) {
     event.preventDefault();
     history.push("/");
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    createDeck(deck).then((response) => history.push(`/decks/${response.id}`));
   }
 
   return (

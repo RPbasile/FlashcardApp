@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useParams, useHistory } from 
 "react-router-dom";
+import CardForm from "./CardForm";
 import { readDeck, readCard, updateCard } from '../utils/api/index'; 
 
 function EditCard({ deck, setDeck, card, setCard }) {
@@ -23,24 +24,22 @@ function EditCard({ deck, setDeck, card, setCard }) {
       loadCard();
     }, [cardId, setCard]);
 
-  function saveHandler (event) {
+    function changeFront(event){
+      setCard({ ...card, front: event.target.value })
+    }
+    
+    function changeBack(event){
+      setCard({ ...card, back: event.target.value })
+    }
+
+  function handleSave (event) {
     event.preventDefault();
     updateCard(card).then((response) => history.push(`/decks/${deck.id}`))
   }
 
-  function handleCancel() {
+  function handleDone() {
     history.push(`/decks/${deck.id}`)
   }
-
-  function changeFront(event){
-    setCard({ ...card, front: event.target.value })
-  }
-  
-  function changeBack(event){
-    setCard({ ...card, back: event.target.value })
-  }
-
-  console.log("does the work?" + deck)
 
   return (
     <div>
@@ -54,31 +53,15 @@ function EditCard({ deck, setDeck, card, setCard }) {
       </nav>
     </div>
     <div>
-    <form>
     <h1>Edit Card</h1>
-  <div className="mb-3">
-    <label 
-    className="form-label">Front</label>
-    <textarea
-      type="text" className="form-control" 
-      id="front"
-      value={card.front}
-      onChange={changeFront}
-      rows="3"/> 
-  </div>
-  <div className="mb-3">
-    <label className="form-label">Back</label>
-    <textarea className="form-control" id="back"
-    value={card.back}
-    onChange={changeBack}
-    rows="3"
-    />
-  </div>
-
-  <button type="submit" className="btn btn-primary" onClick={handleCancel}>Cancel</button>
-
-  <button type="submit" className="btn btn-primary" onClick={saveHandler} >Save</button>
-  </form>
+    <CardForm 
+          changeFront={changeFront}
+          changeBack={changeBack}
+          handleSave={handleSave}
+          handleDoneCancel={handleDone}
+          cardValueFront={card.front}
+          cardValueBack={card.back}
+        />
   </div>
   </div>
   )

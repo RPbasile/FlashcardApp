@@ -46,7 +46,7 @@ function Layout() {
           <AddCard deck={deck} setDeck={setDeck} card={card} setCard={setCard}/>
         </Route>
         <Route exact path="/decks/:deckId/cards/:cardId/edit">
-          <EditCard deck={deck} setDeck={setDeck} card={card} setCard={setCard}/>
+          <EditCard deck={deck} setDeck={setDeck} card={card} setCard={setCard} />
         </Route>
         <Route path="*">
           <NotFound />

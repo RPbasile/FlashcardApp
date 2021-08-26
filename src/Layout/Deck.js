@@ -12,6 +12,7 @@ function Deck({ deck }) {
     if (confirmed) {
       deleteDeck(deckId);
       history.push("/");
+      window.location.reload(false);
     }
   };
 

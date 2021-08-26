@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useHistory, useParams } from "react-router-dom";
 import { readDeck, createCard } from '../utils/api/index'; 
+import CardForm from "./CardForm";
 
 function AddCard({deck, setDeck, card, setCard}) {
   const history = useHistory();
@@ -17,7 +18,7 @@ function AddCard({deck, setDeck, card, setCard}) {
   function changeFront(event){
     setCard({ ...card, front: event.target.value })
   }
-
+  
   function changeBack(event){
     setCard({ ...card, back: event.target.value })
   }
@@ -39,16 +40,8 @@ function AddCard({deck, setDeck, card, setCard}) {
     })
   }
 
-  // function handleSubmit(event) {
-  //   event.preventDefault();
-  //   const newDeck = {deckName, deckDescription}
-  //   createDeck(newDeck).then((response) => history.push(`/decks/${response.id}`));
-  // }
-
-
   return (
     <div>
-          <div>
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb">
           <li className="breadcrumb-item"><a href="/">Home</a></li>
@@ -56,35 +49,18 @@ function AddCard({deck, setDeck, card, setCard}) {
           <li className="breadcrumb-item active" aria-current="page">Add Card</li>
         </ol>
       </nav>
-
-    <form>
-      <h1>{deck.name}: Add Card</h1>
-    <div className="mb-3">
-      <label 
-      className="form-label">Front</label>
-      <textarea
-        type="text" className="form-control" 
-        id="front"
-        placeholder="Front side of card"
-        rows="3"
-        onChange={changeFront}/> 
-    </div>
-    <div className="mb-3">
-      <label className="form-label">Back</label>
-      <textarea className="form-control" id="back" 
-      placeholder="Back side of card"
-      rows="3"
-      onChange={changeBack}
-      />
-    </div>
-
-    <button type="done" className="btn btn-secondary" onClick={handleDone}>Done</button>
-
-    <button type="submit" className="btn btn-primary" onClick={handleSave}>Save</button>
-    </form>
-
+      <div>
+        <h1>{deck.name}: Add Card</h1>
+        <CardForm 
+          changeFront={changeFront}
+          changeBack={changeBack}
+          handleSave={handleSave}
+          handleDoneCancel={handleDone}
+          cardValueFront="Front side of the card"
+          cardValueBack="Back side of the card"
+        />
+      </div>
   </div>
-    </div>
   )
 }
 
